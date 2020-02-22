@@ -14,7 +14,7 @@ RUN curl --silent --location https://deb.nodesource.com/setup_6.x | bash - && \
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 RUN npm install -g $SERVERLESS
 
-RUN apt-get -y install go-dep
+RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 RUN apt-get -y install make
 
 RUN go get github.com/aws/aws-lambda-go
