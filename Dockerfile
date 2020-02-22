@@ -17,6 +17,5 @@ RUN npm install -g $SERVERLESS
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 RUN apt-get -y install make
 
-RUN go get github.com/aws/aws-lambda-go
 
 
