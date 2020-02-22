@@ -1,19 +1,22 @@
-FROM golang:latest 
+FROM golang:1.13.8-stretch
 
-RUN apt-get update
-RUN apt-get -y upgrade
+ENV SERVERLESS serverless@1.63.0
+ENV GOPATH /go
+ENV PATH $GOPATH/bin:/root/.yarn/bin:$PATH
 
-RUN apt-get -y install git-core curl build-essential openssl libssl-dev \
- && git clone https://github.com/nodejs/node.git \
- && cd node \
- && ./configure \
- && make \
- && sudo make install
+RUN mkdir /.cache && \
+    mkdir /.cache/go-build
+RUN apt-get update && \
+    apt-get install git
+RUN	go get -u github.com/rancher/trash
+RUN curl --silent --location https://deb.nodesource.com/setup_6.x | bash - && \
+    apt-get install -y nodejs
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+RUN npm install -g $SERVERLESS
 
 RUN apt-get -y install go-dep
 RUN apt-get -y install make
 
-RUN npm install -g serverless
-
 RUN go get github.com/aws/aws-lambda-go
+
 
